@@ -75,3 +75,64 @@ heatmap = sns.heatmap(corr, annot=True, mask=matrix, fmt='.1g', cmap='coolwarm')
 heatmap.set_title('Correlation', fontdict={'fontsize':22}, pad=25)
 ```
 Как видим выше, достаточно много признаков имеют высокий коэффициент корреляции, но наиболее значимыми атрибутами являются: `total_casem, new_case, new_cases_smoothed, total_deaths, new_deaths и new_deaths_smoothed`
+
+Пустые значения
+Пустые значения были предобработанны ранее, после предобработки их больше не осталось
+
+pd.set_option('display.max_rows',None)
+df.isnull().sum()
+pd.set_option('display.max_rows',10)
+
+Плотность распределения данных
+
+Сформируем графики плотностей для каждого признака
+
+```
+# Распределение категориальной переменной
+plt.figure(figsize=(10, 5))
+sns.kdeplot(df['tests_units'].value_counts())
+plt.title('Distribution tests_units')
+plt.xlabel('Значения')
+plt.ylabel('Распределение')
+plt.show()
+```
+```
+# Распределение категориальной переменной
+plt.figure(figsize=(10, 5))
+sns.kdeplot(df['iso_code'].value_counts())
+plt.title('Distribution iso_code')
+plt.xlabel('Значения')
+plt.ylabel('Распределение')
+plt.show()
+```
+# Распределение категориальной переменной
+plt.figure(figsize=(10, 5))
+sns.kdeplot(df['continent'].value_counts())
+plt.title('Distribution continent')
+plt.xlabel('Значения')
+plt.ylabel('Распределение')
+plt.show()
+```
+# Распределение категориальной переменной
+plt.figure(figsize=(10, 5))
+sns.kdeplot(df['location'].value_counts())
+plt.title('Distribution location')
+plt.xlabel('Значение')
+plt.ylabel('Распределение')
+plt.show()
+```
+```
+#Функция вывода распределения каждого атрибута, являющегося численным признаком
+def plot(column):
+    plt.figure(figsize=(10, 5))
+    sns.kdeplot(df[column])
+    plt.title('Distribution '+column)
+    plt.xlabel('Значения')
+    plt.ylabel('Распределение')
+    plt.show()
+```
+```
+#Применение функции
+for column in df[:100].select_dtypes(exclude=['object']).columns:
+    plot(column)
+```
