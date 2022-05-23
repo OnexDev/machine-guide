@@ -66,4 +66,12 @@ df=df.fillna(0)
 ```
 Определение наиболее значимых атрибутов
 Чтобы найти наиболее значимые атрибуты, построим корреляцию Пирсона на тепловой карте
+```
+# Фомирование корреляции Пирсона
+corr=df.corr()
+plt.figure(figsize=(200, 100))
 
+matrix = np.triu(corr)
+heatmap = sns.heatmap(corr, annot=True, mask=matrix, fmt='.1g', cmap='coolwarm')
+heatmap.set_title('Correlation', fontdict={'fontsize':22}, pad=25)
+```
