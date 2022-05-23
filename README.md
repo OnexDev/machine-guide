@@ -105,6 +105,7 @@ plt.xlabel('Значения')
 plt.ylabel('Распределение')
 plt.show()
 ```
+```
 # Распределение категориальной переменной
 plt.figure(figsize=(10, 5))
 sns.kdeplot(df['continent'].value_counts())
@@ -112,6 +113,7 @@ plt.title('Distribution continent')
 plt.xlabel('Значения')
 plt.ylabel('Распределение')
 plt.show()
+```
 ```
 # Распределение категориальной переменной
 plt.figure(figsize=(10, 5))
