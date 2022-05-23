@@ -41,22 +41,21 @@ df.shape
 
 Дополним набор данных новой информацией, чтобы в случае необходимости точность модели при обучении была больше. Также новые данные могут пригодиться для того, чтобы включить их в аналих данных, из которого можно вынести некоторые зависимости, если они присутствует.
 
-В качестве новых данных возьмём среднее количество смертей и заражённых на регион.
+В качестве новых данных возьмём среднее количество протестированных и полностью вакцинированных на континент, чтобы оценить готовность каждого из континентов к борьбе против короновирусной инфекции.
 ### Заполнение пустых полей
 
 ```
-df[['location', 'new_cases', 'new_deaths']]=df[['location', 'new_cases', 'new_deaths']].fillna(0)
+df[['location', 'total_tests_per_thousand', 'people_fully_vaccinated_per_hundred']]=df[['location', 'total_tests_per_thousand', 'people_fully_vaccinated_per_hundred']].fillna(0)
 ```
+### Формирование дополнительных атрибутов
 ```
 # Формирование дополнительных атрибутов
-grouped_cases=df[['location', 
-                  'new_cases', 
-                  'new_deaths']].groupby(by="location").mean().rename(columns={'new_cases':'mean_new_cases', 
-                                                                               'new_deaths':'mean_new_deaths'})
+external_attrs=df[['continent', 'total_tests_per_thousand', 'people_fully_vaccinated_per_hundred']].groupby(by="continent").mean().rename(
+    columns={'total_tests_per_thousand':'mean_total_tests_per_thousans', 'people_fully_vaccinated_per_hundred':'mean_fully_vaccinated_per_hundered'})
+
 ```
-grouped_cases => Группировка 
 ```
-df=df.merge(grouped_cases, on='location')
+df=df.merge(external_attrs, on='continent')
 ```
 Генерация новых данных произведена
 
