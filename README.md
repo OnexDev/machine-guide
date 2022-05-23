@@ -1,6 +1,7 @@
 # Machine learning opensource guide.
 
 ## Basic chapter
+Thanks for support [@pandas](https://pandas.pydata.org/getting_started.html), [@seaborn](https://github.com/eugenerum/ToolDataHelper/tree/main/Examples), [@matplotlib](https://matplotlib.org/)
 ### Importing modules
 ```
 import pandas as pd
@@ -34,11 +35,35 @@ df.info()
 pd.set_option('display.max_rows',None)
 df.isnull().sum()
 pd.set_option('display.max_rows',10)
-df.shape #
+df.shape
 ```
 Все данные при парсинге из репозитория были включены. Размерность набора данных составляет df.shape[0] строк и df.shape[1] столбцов
 
 Дополним набор данных новой информацией, чтобы в случае необходимости точность модели при обучении была больше. Также новые данные могут пригодиться для того, чтобы включить их в аналих данных, из которого можно вынести некоторые зависимости, если они присутствует.
 
 В качестве новых данных возьмём среднее количество смертей и заражённых на регион.
+
+```
+# Заполнение пустых полей
+df[['location', 'new_cases', 'new_deaths']]=df[['location', 'new_cases', 'new_deaths']].fillna(0)
+```
+```
+# Формирование дополнительных атрибутов
+grouped_cases=df[['location', 
+                  'new_cases', 
+                  'new_deaths']].groupby(by="location").mean().rename(columns={'new_cases':'mean_new_cases', 
+                                                                               'new_deaths':'mean_new_deaths'})
+```
+grouped_cases => Группировка 
+```
+df=df.merge(grouped_cases, on='location')
+```
+Генерация новых данных произведена
+
+## 1.2. Data predprocessing and selection most valuable attributes
+```
+df=df.fillna(0)
+```
+Определение наиболее значимых атрибутов
+Чтобы найти наиболее значимые атрибуты, построим корреляцию Пирсона на тепловой карте
 
