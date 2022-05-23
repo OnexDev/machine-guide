@@ -75,3 +75,4 @@ matrix = np.triu(corr)
 heatmap = sns.heatmap(corr, annot=True, mask=matrix, fmt='.1g', cmap='coolwarm')
 heatmap.set_title('Correlation', fontdict={'fontsize':22}, pad=25)
 ```
+Как видим выше, достаточно много признаков имеют высокий коэффициент корреляции, но наиболее значимыми атрибутами являются: `total_casem, new_case, new_cases_smoothed, total_deaths, new_deaths и new_deaths_smoothed`
